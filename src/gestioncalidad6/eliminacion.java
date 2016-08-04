@@ -275,9 +275,7 @@ public static boolean validacion;
           }
          if (id.getText().length()>=10){
             evt.consume();
-            /* if (conexion.validadorDeCedula(id.getText())) {
-                 JOptionPane.showMessageDialog(rootPane,"cedula correcta");
-             }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");}*/
+            
         }
          
          

@@ -74,7 +74,12 @@ public class menuPadre extends javax.swing.JFrame {
 
         MenuConsulta.setText("Realizar consultas");
 
-        jMenuItem1.setText("Buscar turista");
+        jMenuItem1.setText("Buscar lugar turístico por turista");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         MenuConsulta.add(jMenuItem1);
 
         jMenuItem4.setText("Buscar lugar turístico por hotel");
@@ -86,9 +91,19 @@ public class menuPadre extends javax.swing.JFrame {
         MenuConsulta.add(jMenuItem4);
 
         jMenuItem2.setText("Buscar lugar turístico por ciudad");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         MenuConsulta.add(jMenuItem2);
 
         jMenuItem3.setText("Buscar lugar turístico por región");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         MenuConsulta.add(jMenuItem3);
 
         Menu.add(MenuConsulta);
@@ -140,7 +155,9 @@ public class menuPadre extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        consultaHotel consultahotel = new consultaHotel();
+        consultahotel.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
@@ -172,6 +189,24 @@ public class menuPadre extends javax.swing.JFrame {
         Eliminar.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        consultaTurista consulta = new consultaTurista();
+        consulta.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        consultaRegion consultaregion = new consultaRegion();
+        consultaregion.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        consultaCiudad consultaciudad = new consultaCiudad();
+        consultaciudad.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

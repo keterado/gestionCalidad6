@@ -6,6 +6,7 @@
 
 package gestioncalidad6;
 
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class modificacion extends javax.swing.JFrame {
-
+public static conexion conexion = new conexion();
     /**
      * Creates new form modificacion
      */
@@ -89,6 +90,17 @@ public class modificacion extends javax.swing.JFrame {
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
+            }
+        });
+        id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                idKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                idKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idKeyTyped(evt);
             }
         });
 
@@ -354,7 +366,24 @@ public class modificacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        if (conexion.validadorDeCedula(ingresoCedula.getText())) {
+             if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente modificar la informacion del turista?",
+                "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+       {
+        if (conexion.crearConexion()) {
+            
+             String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"' where cedula = "+id.getText();
+             try{
+            conexion.ejecutarSQL(sql);
+            JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+                }
+            }
+          
+        }
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void numAdultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numAdultosActionPerformed
@@ -397,8 +426,78 @@ public class modificacion extends javax.swing.JFrame {
     }//GEN-LAST:event_idActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        contenedor.setVisible(true);
+                
+        if (conexion.crearConexion()&& conexion.validadorDeCedula(id.getText())) {
+            ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCedula.setText("");
+                ingresoCorreo.setText("");
+                ingresoCiudad.setText("");
+                ingresoDireccion.setText("");
+                siFrecuente.setSelected(false);
+            String nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes;
+             String sql="select nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes "
+                     + "from \"infoturista\" where cedula = "+id.getText();
+             
+             try{
+            ResultSet rs = conexion.ejecutarSQLSelect(sql);
+            while(rs.next()){
+                nombres = rs.getString(1);
+                apellidos = rs.getString(2);
+                cedula = rs.getString(3);
+                correo = rs.getString(4);
+                ciudad = rs.getString(5);
+                direccion = rs.getString(6);
+                cliente_frecuente = rs.getString(7);
+                seguro_viaje = rs.getString(8);
+                acompanantes = rs.getString(9);
+               
+                ingresoNombres.setText(nombres);
+                ingresoApellidos.setText(apellidos);
+                ingresoCedula.setText(cedula);
+                ingresoCorreo.setText(correo);
+                ingresoCiudad.setText(ciudad);
+                ingresoDireccion.setText(direccion);
+                if (cliente_frecuente=="false"||cliente_frecuente=="f") {
+                    siFrecuente.setSelected(false);
+                }else{siFrecuente.setSelected(true);}
+                
+            }
+        }catch(Exception ex){
+                //txtApellidos.setText("");
+                //txtCedula.setText("");
+            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+        }
+             contenedor.setVisible(true);
+             
+        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");}
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void idKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idKeyPressed
+
+    private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
+       char c=evt.getKeyChar(); 
+          
+         if(!Character.isDigit(c)) {  
+              evt.consume(); 
+          }
+         if (id.getText().length()>=10){
+            evt.consume();     
+        }
+    }//GEN-LAST:event_idKeyTyped
+
+    private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
+        if (id.getText().length()==10){
+            
+             if (conexion.validadorDeCedula(id.getText())) {
+                 JOptionPane.showMessageDialog(rootPane,"cedula correcta");
+             }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");}
+             
+        }
+    }//GEN-LAST:event_idKeyReleased
 
     /**
      * @param args the command line arguments
