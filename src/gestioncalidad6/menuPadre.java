@@ -6,6 +6,8 @@
 
 package gestioncalidad6;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -46,7 +48,7 @@ public class menuPadre extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
-        btnCerrar.setText("Cerrar");
+        btnCerrar.setText("Salir");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarActionPerformed(evt);
@@ -124,7 +126,7 @@ public class menuPadre extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(161, 161, 161)
                 .addComponent(btnCerrar)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +144,11 @@ public class menuPadre extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir del programa?",
+                "Cerrar programa", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        {
         System.exit(0);
+        }
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void MenuIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuIngresoActionPerformed

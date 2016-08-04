@@ -6,6 +6,8 @@
 
 package gestioncalidad6;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -313,8 +315,12 @@ int bandera = 0;
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
         menuPadre Menu =new menuPadre();
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir al menú principal?",
+                "Salir al menú principal", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        {
         Menu.setVisible(true);
         dispose();
+        }
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     private void siAcompañantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siAcompañantesActionPerformed

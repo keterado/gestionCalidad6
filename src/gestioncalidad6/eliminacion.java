@@ -6,6 +6,8 @@
 
 package gestioncalidad6;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -188,8 +190,12 @@ public class eliminacion extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         menuPadre menu = new menuPadre();
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir al menú principal?",
+                "Salir al menú principal", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        {
         menu.setVisible(true);
         dispose();
+        }else{ }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
