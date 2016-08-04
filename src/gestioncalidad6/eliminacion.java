@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class eliminacion extends javax.swing.JFrame {
 public static conexion conexion = new conexion();
+public static boolean validacion;
 
     /**
      * Creates new form eliminacion
@@ -26,6 +27,7 @@ public static conexion conexion = new conexion();
     public eliminacion() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
         
     }
 
@@ -49,6 +51,7 @@ public static conexion conexion = new conexion();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -56,6 +59,14 @@ public static conexion conexion = new conexion();
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
+            }
+        });
+        id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                idKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idKeyTyped(evt);
             }
         });
 
@@ -133,6 +144,8 @@ public static conexion conexion = new conexion();
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("ELIMINAR TURISTA");
 
+        jLabel5.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,7 +166,9 @@ public static conexion conexion = new conexion();
                         .addComponent(jLabel1)
                         .addGap(32, 32, 32)
                         .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(128, 128, 128))
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel5)
+                        .addGap(55, 55, 55))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnEliminar)
                         .addGap(83, 83, 83)
@@ -172,7 +187,8 @@ public static conexion conexion = new conexion();
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
                 .addGap(18, 18, 18)
@@ -192,7 +208,24 @@ public static conexion conexion = new conexion();
     }//GEN-LAST:event_idActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente eliminar al turista?",
+                "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+       {
+        if (conexion.crearConexion()) {
+            
+             String sql="delete from \"infoturista\" where cedula = "+id.getText();
+             try{
+            conexion.ejecutarSQL(sql);
+            txtApellidos.setText("");
+            txtCedula.setText(" ");
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+                }
+            }
+          
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -206,9 +239,10 @@ public static conexion conexion = new conexion();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (conexion.crearConexion()) {
+        if (conexion.crearConexion()&& conexion.validadorDeCedula(id.getText())) {
             String apellidos, cedula;
              String sql="select apellidos, cedula from \"infoturista\" where cedula = "+id.getText();
+             
              try{
             ResultSet rs = conexion.ejecutarSQLSelect(sql);
             while(rs.next()){
@@ -218,16 +252,46 @@ public static conexion conexion = new conexion();
                
                 txtApellidos.setText(apellidos);
                 txtCedula.setText(cedula);
+                
             }
         }catch(Exception ex){
+                txtApellidos.setText("");
+                txtCedula.setText("");
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
         }
-        }
+             
+        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");}
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtApellidosActionPerformed
+
+    private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
+         char c=evt.getKeyChar(); 
+          
+         if(!Character.isDigit(c)) {  
+              evt.consume(); 
+          }
+         if (id.getText().length()>=10){
+            evt.consume();
+            /* if (conexion.validadorDeCedula(id.getText())) {
+                 JOptionPane.showMessageDialog(rootPane,"cedula correcta");
+             }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");}*/
+        }
+         
+         
+    }//GEN-LAST:event_idKeyTyped
+
+    private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
+        if (id.getText().length()==10){
+            
+             if (conexion.validadorDeCedula(id.getText())) {
+                 JOptionPane.showMessageDialog(rootPane,"cedula correcta");
+             }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");}
+             
+        }
+    }//GEN-LAST:event_idKeyReleased
 
     /**
      * @param args the command line arguments
@@ -260,6 +324,7 @@ public static conexion conexion = new conexion();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new eliminacion().setVisible(true);
+                txtCedula.setText(" ");
             }
         });
     }
@@ -273,8 +338,9 @@ public static conexion conexion = new conexion();
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtCedula;
+    public static javax.swing.JTextField txtCedula;
     // End of variables declaration//GEN-END:variables
 }
