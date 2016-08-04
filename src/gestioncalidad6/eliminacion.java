@@ -6,6 +6,11 @@
 
 package gestioncalidad6;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.sql.ResultSet;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,6 +18,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class eliminacion extends javax.swing.JFrame {
+public static conexion conexion = new conexion();
 
     /**
      * Creates new form eliminacion
@@ -20,6 +26,7 @@ public class eliminacion extends javax.swing.JFrame {
     public eliminacion() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -37,8 +44,8 @@ public class eliminacion extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        cedula = new javax.swing.JTextField();
-        apellidos = new javax.swing.JTextField();
+        txtCedula = new javax.swing.JTextField();
+        txtApellidos = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -77,12 +84,12 @@ public class eliminacion extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        cedula.setEditable(false);
+        txtCedula.setEditable(false);
 
-        apellidos.setEditable(false);
-        apellidos.addActionListener(new java.awt.event.ActionListener() {
+        txtApellidos.setEditable(false);
+        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                apellidosActionPerformed(evt);
+                txtApellidosActionPerformed(evt);
             }
         });
 
@@ -103,8 +110,8 @@ public class eliminacion extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGap(18, 18, 18)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -115,11 +122,11 @@ public class eliminacion extends javax.swing.JFrame {
                     .addGap(21, 21, 21)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(21, Short.MAX_VALUE)))
         );
 
@@ -199,12 +206,28 @@ public class eliminacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        if (conexion.crearConexion()) {
+            String apellidos, cedula;
+             String sql="select apellidos, cedula from \"infoturista\" where cedula = "+id.getText();
+             try{
+            ResultSet rs = conexion.ejecutarSQLSelect(sql);
+            while(rs.next()){
+                apellidos = rs.getString(1);
+                cedula = rs.getString(2);
+                
+               
+                txtApellidos.setText(apellidos);
+                txtCedula.setText(cedula);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+        }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void apellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidosActionPerformed
+    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_apellidosActionPerformed
+    }//GEN-LAST:event_txtApellidosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,16 +265,16 @@ public class eliminacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField apellidos;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JTextField cedula;
     private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtCedula;
     // End of variables declaration//GEN-END:variables
 }
