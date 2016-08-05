@@ -436,6 +436,10 @@ public static conexion conexion = new conexion();
                 siFrecuente.setSelected(false);
                 siSeguro.setSelected(false);
                 siAcompañantes.setSelected(false);
+                
+                panelOculto.setVisible(false);
+                bandera=0;
+                
                 numNiños.setText("");
                 numAdultos.setText("");
     }//GEN-LAST:event_btnGrabarActionPerformed

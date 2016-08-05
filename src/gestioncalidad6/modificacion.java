@@ -26,6 +26,7 @@ public static conexion conexion = new conexion();
         this.setLocationRelativeTo(null);
         panelOculto.setVisible(false);
         contenedor.setVisible(false);
+        int bandera = 0;
     }
 
     /**
@@ -402,7 +403,8 @@ public static conexion conexion = new conexion();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (conexion.validadorDeCedula(ingresoCedula.getText())) {
+        if (conexion.validadorDeCedula(ingresoCedula.getText()) && (!ingresoNombres.getText().equals("") && !ingresoApellidos.getText().equals("") &&
+                !ingresoCorreo.getText().equals("") && !ingresoDireccion.getText().equals("") && !ingresoCiudad.getText().equals(""))) {
              if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente modificar la informacion del turista?",
                 "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
        {
@@ -411,26 +413,87 @@ public static conexion conexion = new conexion();
             String frecuente = String.valueOf(siFrecuente.isSelected());
             String acompa = String.valueOf(siAcompañantes.isSelected());
             String numNino, numAdulto;
+            
+            //
             if (acompa.equals("true")) {
+                if (numNiños.getText().equals("")) {
+                    numNiños.setText("0");
+                }
+                if (numAdultos.getText().equals("")) {
+                    numAdultos.setText("0");
+                }
                 numAdulto=numAdultos.getText();
                 numNino= numNiños.getText();
-                /*if ((numNino.equals("0") && numAdulto.equals("0"))||(numNino.equals("00") && numAdulto.equals("00"))) {
-                    JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
-                }else{
-                
-                        }*/
+                bandera=0;
+                if ((numNiños.getText().equals("0") && numAdultos.getText().equals("0"))
+                    ||
+                    (numNiños.getText().equals("00") && numAdultos.getText().equals("00"))
+                    ||
+                    (numNiños.getText().equals("0") && numAdultos.getText().equals("00"))
+                    ||
+                    (numNiños.getText().equals("00") && numAdultos.getText().equals("0"))) {
+                        JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
+                        bandera =1;
+                } 
+               
             }else{
-                numNino = "0";
+                numAdultos.setText("0");
+                numNiños.setText("0");
+                numAdulto=numAdultos.getText();
+                numNino= numNiños.getText();
+            }
+            if (bandera==0) {
+                  String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"'"
+                     + ",cliente_frecuente = '"+frecuente+"',seguro_viaje ='"+seguro+"',acompanantes = '"+acompa+"',adultos='"+numAdulto+"',ninos = '"+numNino+"' where cedula = "+id.getText();
+             try{
+            conexion.ejecutarSQL(sql);
+            JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
+             ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCedula.setText("");
+                ingresoCorreo.setText("");
+                ingresoCiudad.setText("");
+                ingresoDireccion.setText("");
+                siFrecuente.setSelected(false);
+                siSeguro.setSelected(false);
+                siAcompañantes.setSelected(false);
+                numAdultos.setText("");
+                numNiños.setText("");
+                
+            
+            }
+                catch(Exception ex){
+               JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+                }
+            }else{JOptionPane.showMessageDialog(rootPane,"No se guardó el turista");}
+                 
+            
+            //
+            
+            /*
+            if (acompa.equals("true")) {
+            if (numNiños.getText().equals("")) {
+                    numNiños.setText("0");
+                }
+                if (numAdultos.getText().equals("")) {
+                    numAdultos.setText("0");
+                }
+                numAdulto=numAdultos.getText();
+                numNino= numNiños.getText();
+            }
+            else{
+                numAdultos.setText("0");
+                numNiños.setText("0");
+                 numNino = "0";
                 numAdulto ="0";
             }
-            //
-            if ((numNino.equals("0") && numAdulto.equals("0"))
+            if ((numNiños.equals("0") && numAdultos.equals("0"))
                     ||
-                    (numNino.equals("00") && numAdulto.equals("00"))
+                    (numNiños.equals("00") && numAdultos.equals("00"))
                     ||
-                    (numNino.equals("0") && numAdulto.equals("00"))
+                    (numNiños.equals("0") && numAdultos.equals("00"))
                     ||
-                    (numNino.equals("00") && numAdulto.equals("0"))
+                    (numNiños.equals("00") && numAdultos.equals("0"))
                     ) {
                     JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
                 }else{
@@ -457,7 +520,7 @@ public static conexion conexion = new conexion();
                JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
                         }
-             
+             */
              //
              
             }
