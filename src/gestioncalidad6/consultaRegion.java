@@ -9,6 +9,8 @@ package gestioncalidad6;
 import static gestioncalidad6.consultaTurista.conexion;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -22,6 +24,8 @@ public class consultaRegion extends javax.swing.JFrame {
     public consultaRegion() {
         initComponents();
                 this.setLocationRelativeTo(null);
+                
+                
     }
 
     /**
@@ -150,24 +154,27 @@ public class consultaRegion extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
        if (conexion.crearConexion()) {
-            
-            int row = 0;
+           
+           String[] titulos ={"País","Provincia","Ciudad", "Direccion", "Comida típica", "Nombre del hotel"};
+             DefaultTableModel modelo = new DefaultTableModel (null, titulos); 
+             String[] fila = new String[6];    
+             
              String sql="select pais, provincia, ciudad, direccion, comida_tipica, nombre_hotel from lugarturistico where region = '"+id.getText()+"'";
              
              try{
             ResultSet rs = conexion.ejecutarSQLSelect(sql);
             
             while(rs.next()){
-               this.tablaRegion.setValueAt(rs.getString(1), row, 0);
-               this.tablaRegion.setValueAt(rs.getString(2), row, 1);
-               this.tablaRegion.setValueAt(rs.getString(3), row, 2);
-               this.tablaRegion.setValueAt(rs.getString(4), row, 3);
-               this.tablaRegion.setValueAt(rs.getString(5), row, 4);
-               this.tablaRegion.setValueAt(rs.getString(6), row, 5);
-               
-                row++;
+                
+               fila[0] = rs.getString(1);
+               fila[1] = rs.getString(2);
+               fila[2] = rs.getString(3);
+               fila[3] = rs.getString(4);
+               fila[4] = rs.getString(5);
+               fila[5] = rs.getString(6);
+                modelo.addRow(fila);
             }
-            
+            tablaRegion.setModel(modelo);
         }catch(Exception ex){
               
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
@@ -215,6 +222,7 @@ public class consultaRegion extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new consultaRegion().setVisible(true);
+                
             }
         });
     }
@@ -226,6 +234,6 @@ public class consultaRegion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaRegion;
+    public static javax.swing.JTable tablaRegion;
     // End of variables declaration//GEN-END:variables
 }
