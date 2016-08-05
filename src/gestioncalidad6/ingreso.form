@@ -43,7 +43,6 @@
                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -53,7 +52,6 @@
                           <Component id="panelOculto" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="siAcompañantes" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="ingresoCedula" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
-                          <Component id="siExtranjero" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="siFrecuente" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="siSeguro" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="ingresoCiudad" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
@@ -111,12 +109,7 @@
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="ingresoDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="siExtranjero" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="siFrecuente" min="-2" max="-2" attributes="0"/>
@@ -175,11 +168,6 @@
         <Property name="text" type="java.lang.String" value="Direcci&#xf3;n"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Extranjero"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cliente frecuente"/>
@@ -209,14 +197,6 @@
     <Component class="javax.swing.JTextField" name="ingresoCiudad">
     </Component>
     <Component class="javax.swing.JTextField" name="ingresoDireccion">
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="siExtranjero">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Si"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="siExtranjeroActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="siFrecuente">
       <Properties>

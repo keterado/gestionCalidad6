@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class eliminacion extends javax.swing.JFrame {
 public static conexion conexion = new conexion();
-public static boolean validacion;
+public static int bandera =0;
 
     /**
      * Creates new form eliminacion
@@ -210,9 +210,9 @@ public static boolean validacion;
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
         if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente eliminar al turista?",
-                "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION )
        {
-        if (conexion.crearConexion()) {
+        if (conexion.crearConexion()&& conexion.validadorDeCedula(txtCedula.getText())) {
             
              String sql="delete from \"infoturista\" where cedula = "+id.getText();
              try{
@@ -223,7 +223,7 @@ public static boolean validacion;
         }catch(Exception ex){
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
-            }
+            }else{JOptionPane.showMessageDialog(rootPane,"ingrese turista a eliminar");}
           
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -260,7 +260,18 @@ public static boolean validacion;
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
         }
              
-        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");}
+             
+        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");
+                txtApellidos.setText("");
+                txtCedula.setText("");
+                }
+        if (bandera != 0) {
+            if (id.getText()!=txtCedula.getText()) {
+                txtApellidos.setText("");
+                txtCedula.setText("");
+            }
+        }
+        bandera =1;
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed

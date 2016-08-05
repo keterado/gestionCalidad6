@@ -6,6 +6,8 @@
 
 package gestioncalidad6;
 
+import static gestioncalidad6.consultaTurista.conexion;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -138,7 +140,35 @@ public class consultaCiudad extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+        if (conexion.crearConexion()) {
+            
+            int row = 0;
+             String sql="select pais, provincia, region, direccion, comida_tipica, nombre_hotel from lugarturistico where ciudad = '"+id.getText()+"'";
+             
+             try{
+            ResultSet rs = conexion.ejecutarSQLSelect(sql);
+            
+            while(rs.next()){
+               this.tablaRegion.setValueAt(rs.getString(1), row, 0);
+               this.tablaRegion.setValueAt(rs.getString(2), row, 1);
+               this.tablaRegion.setValueAt(rs.getString(3), row, 2);
+               this.tablaRegion.setValueAt(rs.getString(4), row, 3);
+               this.tablaRegion.setValueAt(rs.getString(5), row, 4);
+               this.tablaRegion.setValueAt(rs.getString(6), row, 5);
+               
+                row++;
+            }
+            
+        }catch(Exception ex){
+              
+            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+        }
+
+             
+        }else{
+                id.setText("");
+                JOptionPane.showMessageDialog(rootPane,"La región ingresada no es válida");
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**

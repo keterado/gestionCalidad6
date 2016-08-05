@@ -6,6 +6,7 @@
 
 package gestioncalidad6;
 
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class consultaTurista extends javax.swing.JFrame {
-
+public static conexion conexion = new conexion();
     /**
      * Creates new form consultaTurista
      */
@@ -32,7 +33,6 @@ public class consultaTurista extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -50,6 +50,8 @@ public class consultaTurista extends javax.swing.JFrame {
         comida = new javax.swing.JTextField();
         hotel = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        vaciar = new javax.swing.JButton();
+        id = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -101,21 +103,31 @@ public class consultaTurista extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel9.setText("CONSULTAR LUGAR TURÍSTICO POR TURISTA");
 
+        vaciar.setText("vaciar");
+        vaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vaciarActionPerformed(evt);
+            }
+        });
+
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
+        id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                idKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalir)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(btnConsultar)))
-                .addGap(93, 93, 93))
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +149,23 @@ public class consultaTurista extends javax.swing.JFrame {
                             .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(hotel, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                             .addComponent(comida)
-                            .addComponent(direccion))))
+                            .addComponent(direccion)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(vaciar)
+                                .addGap(26, 26, 26)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnConsultar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(btnSalir)))))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -147,9 +175,9 @@ public class consultaTurista extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(btnConsultar))
+                    .addComponent(btnConsultar)
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -179,7 +207,9 @@ public class consultaTurista extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(hotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(btnSalir)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalir)
+                    .addComponent(vaciar))
                 .addContainerGap())
         );
 
@@ -187,7 +217,56 @@ public class consultaTurista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+                
+        if (conexion.crearConexion()&& conexion.validadorDeCedula(id.getText())) {
+            pais.setText("");
+                provincia.setText("");
+                region.setText("");
+                ciudad.setText("");
+                direccion.setText("");
+                comida.setText("");
+                hotel.setText("");
+            String ipais, iprovincia, iregion, iciudad, idireccion, icomida, ihotel;
+             String sql="select l.pais, l.provincia, l.ciudad, l.region, l.direccion, l.comida_tipica, l.nombre_hotel "
+                     + "from lugarturistico l inner join infoturista i on (i.id_lutu = l.id) where cedula = "+id.getText();
+             
+             try{
+            ResultSet rs = conexion.ejecutarSQLSelect(sql);
+            while(rs.next()){
+                ipais = rs.getString(1);
+                iprovincia = rs.getString(2);
+                iciudad = rs.getString(3);
+                iregion = rs.getString(4);
+                idireccion = rs.getString(5);
+                icomida = rs.getString(6);
+                ihotel = rs.getString(7);
+                
+                pais.setText(ipais);
+                provincia.setText(iprovincia);
+                ciudad.setText(iciudad);
+                region.setText(iregion);
+                direccion.setText(idireccion);
+                comida.setText(icomida);
+                hotel.setText(ihotel);
+                
+            }
+        }catch(Exception ex){
+                //txtApellidos.setText("");
+                //txtCedula.setText("");
+            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+        }
+
+             
+        }else{
+            pais.setText("");
+                provincia.setText("");
+                region.setText("");
+                ciudad.setText("");
+                direccion.setText("");
+                comida.setText("");
+                hotel.setText("");
+                JOptionPane.showMessageDialog(rootPane,"ingrese una cedula correcta");
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -199,6 +278,44 @@ public class consultaTurista extends javax.swing.JFrame {
         dispose();
         }else{ }
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void vaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaciarActionPerformed
+        id.setText("");        
+        pais.setText("");
+                provincia.setText("");
+                region.setText("");
+                ciudad.setText("");
+                direccion.setText("");
+                comida.setText("");
+                hotel.setText("");
+    }//GEN-LAST:event_vaciarActionPerformed
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
+
+    private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
+        if (id.getText().length()==10){
+
+            if (conexion.validadorDeCedula(id.getText())) {
+                JOptionPane.showMessageDialog(rootPane,"cedula correcta");
+            }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");}
+
+        }
+    }//GEN-LAST:event_idKeyReleased
+
+    private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
+        char c=evt.getKeyChar();
+
+        if(!Character.isDigit(c)) {
+            evt.consume();
+        }
+        if (id.getText().length()>=10){
+            evt.consume();
+
+        }
+
+    }//GEN-LAST:event_idKeyTyped
 
     /**
      * @param args the command line arguments
@@ -255,5 +372,6 @@ public class consultaTurista extends javax.swing.JFrame {
     private javax.swing.JTextField pais;
     private javax.swing.JTextField provincia;
     private javax.swing.JTextField region;
+    private javax.swing.JButton vaciar;
     // End of variables declaration//GEN-END:variables
 }

@@ -39,7 +39,6 @@ int bandera = 0;
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -49,7 +48,6 @@ int bandera = 0;
         ingresoCorreo = new javax.swing.JTextField();
         ingresoCiudad = new javax.swing.JTextField();
         ingresoDireccion = new javax.swing.JTextField();
-        siExtranjero = new javax.swing.JRadioButton();
         siFrecuente = new javax.swing.JRadioButton();
         siSeguro = new javax.swing.JRadioButton();
         btnMenuPrincipal = new javax.swing.JButton();
@@ -78,8 +76,6 @@ int bandera = 0;
 
         jLabel6.setText("Dirección");
 
-        jLabel7.setText("Extranjero");
-
         jLabel8.setText("Cliente frecuente");
 
         jLabel9.setText("Seguro de viaje");
@@ -89,13 +85,6 @@ int bandera = 0;
         ingresoNombres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresoNombresActionPerformed(evt);
-            }
-        });
-
-        siExtranjero.setText("Si");
-        siExtranjero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                siExtranjeroActionPerformed(evt);
             }
         });
 
@@ -211,7 +200,6 @@ int bandera = 0;
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel10)
                             .addComponent(jLabel9)
                             .addComponent(jLabel8))
@@ -220,7 +208,6 @@ int bandera = 0;
                             .addComponent(panelOculto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(siAcompañantes)
                             .addComponent(ingresoCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(siExtranjero)
                             .addComponent(siFrecuente)
                             .addComponent(siSeguro)
                             .addComponent(ingresoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,11 +252,7 @@ int bandera = 0;
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(ingresoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(siExtranjero))
-                        .addGap(18, 18, 18)
+                        .addGap(59, 59, 59)
                         .addComponent(jLabel8))
                     .addComponent(siFrecuente))
                 .addGap(18, 18, 18)
@@ -296,10 +279,6 @@ int bandera = 0;
     private void ingresoNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoNombresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ingresoNombresActionPerformed
-
-    private void siExtranjeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siExtranjeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_siExtranjeroActionPerformed
 
     private void siFrecuenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siFrecuenteActionPerformed
         // TODO add your handling code here:
@@ -399,14 +378,12 @@ int bandera = 0;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField numAdultos;
     private javax.swing.JTextField numNiños;
     public static javax.swing.JPanel panelOculto;
     private javax.swing.JRadioButton siAcompañantes;
-    private javax.swing.JRadioButton siExtranjero;
     private javax.swing.JRadioButton siFrecuente;
     private javax.swing.JRadioButton siSeguro;
     // End of variables declaration//GEN-END:variables

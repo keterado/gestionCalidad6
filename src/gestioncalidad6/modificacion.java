@@ -53,12 +53,10 @@ public static conexion conexion = new conexion();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         ingresoNombres = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ingresoCiudad = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         siFrecuente = new javax.swing.JRadioButton();
-        siExtranjero = new javax.swing.JRadioButton();
         siAcompañantes = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -174,8 +172,14 @@ public static conexion conexion = new conexion();
                 ingresoNombresActionPerformed(evt);
             }
         });
-
-        jLabel7.setText("Extranjero");
+        ingresoNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ingresoNombresKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoNombresKeyTyped(evt);
+            }
+        });
 
         jLabel8.setText("Cliente frecuente");
 
@@ -185,13 +189,6 @@ public static conexion conexion = new conexion();
         siFrecuente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 siFrecuenteActionPerformed(evt);
-            }
-        });
-
-        siExtranjero.setText("Si");
-        siExtranjero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                siExtranjeroActionPerformed(evt);
             }
         });
 
@@ -224,9 +221,7 @@ public static conexion conexion = new conexion();
                 .addGroup(contenedorLayout.createSequentialGroup()
                     .addGap(51, 51, 51)
                     .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(contenedorLayout.createSequentialGroup()
-                            .addComponent(panelOculto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(176, Short.MAX_VALUE))
+                        .addComponent(panelOculto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(contenedorLayout.createSequentialGroup()
                             .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1)
@@ -235,7 +230,6 @@ public static conexion conexion = new conexion();
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel6)
-                                .addComponent(jLabel7)
                                 .addComponent(jLabel10)
                                 .addComponent(jLabel9)
                                 .addComponent(jLabel8))
@@ -245,13 +239,12 @@ public static conexion conexion = new conexion();
                                 .addComponent(ingresoApellidos, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(siAcompañantes, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(ingresoCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(siExtranjero, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(siFrecuente, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(siSeguro, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(ingresoCiudad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(ingresoNombres, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ingresoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(ingresoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         contenedorLayout.setVerticalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,11 +277,7 @@ public static conexion conexion = new conexion();
                             .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
                                 .addComponent(ingresoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(siExtranjero))
-                            .addGap(18, 18, 18)
+                            .addGap(50, 50, 50)
                             .addComponent(jLabel8))
                         .addComponent(siFrecuente))
                     .addGap(18, 18, 18)
@@ -376,14 +365,21 @@ public static conexion conexion = new conexion();
              try{
             conexion.ejecutarSQL(sql);
             JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
+             ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCedula.setText("");
+                ingresoCorreo.setText("");
+                ingresoCiudad.setText("");
+                ingresoDireccion.setText("");
+                siFrecuente.setSelected(false);
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
             }
           
-        }
-        }
+            }
+        }else{JOptionPane.showMessageDialog(rootPane,"ingrese turista a modificar");}
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void numAdultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numAdultosActionPerformed
@@ -412,10 +408,6 @@ public static conexion conexion = new conexion();
     private void siFrecuenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siFrecuenteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_siFrecuenteActionPerformed
-
-    private void siExtranjeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siExtranjeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_siExtranjeroActionPerformed
 
     private void ingresoNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoNombresActionPerformed
         // TODO add your handling code here:
@@ -470,7 +462,14 @@ public static conexion conexion = new conexion();
         }
              contenedor.setVisible(true);
              
-        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");}
+        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");
+                ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCedula.setText("");
+                ingresoCorreo.setText("");
+                ingresoCiudad.setText("");
+                ingresoDireccion.setText("");
+                siFrecuente.setSelected(false);}
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -498,6 +497,20 @@ public static conexion conexion = new conexion();
              
         }
     }//GEN-LAST:event_idKeyReleased
+
+    private void ingresoNombresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoNombresKeyReleased
+        
+    }//GEN-LAST:event_ingresoNombresKeyReleased
+
+    private void ingresoNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoNombresKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c)) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoNombresKeyTyped
 
     /**
      * @param args the command line arguments
@@ -557,14 +570,12 @@ public static conexion conexion = new conexion();
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField numAdultos;
     private javax.swing.JTextField numNiños;
     public static javax.swing.JPanel panelOculto;
     private javax.swing.JRadioButton siAcompañantes;
-    private javax.swing.JRadioButton siExtranjero;
     private javax.swing.JRadioButton siFrecuente;
     private javax.swing.JRadioButton siSeguro;
     // End of variables declaration//GEN-END:variables
