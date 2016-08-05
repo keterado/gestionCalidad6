@@ -8,6 +8,10 @@ package gestioncalidad6;
 
 import static gestioncalidad6.consultaTurista.conexion;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -24,9 +28,11 @@ public class consultaRegion extends javax.swing.JFrame {
     public consultaRegion() {
         initComponents();
                 this.setLocationRelativeTo(null);
+                cargar();
                 
                 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,11 +45,11 @@ public class consultaRegion extends javax.swing.JFrame {
 
         btnSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaRegion = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        combo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -56,12 +62,6 @@ public class consultaRegion extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Región");
-
-        id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idActionPerformed(evt);
-            }
-        });
 
         btnConsultar.setText("consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,23 +95,22 @@ public class consultaRegion extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("CONSULTAR LUGAR TURÍSTICO POR REGIÓN");
 
+        combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", " " }));
+        combo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboMouseClicked(evt);
+            }
+        });
+        combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnConsultar)
-                        .addGap(310, 310, 310))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(329, 329, 329))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +120,19 @@ public class consultaRegion extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSalir)
                         .addGap(453, 453, 453))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(329, 329, 329))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(35, 35, 35)
+                        .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnConsultar)
+                        .addGap(320, 320, 320))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,9 +141,9 @@ public class consultaRegion extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(btnConsultar))
+                    .addComponent(btnConsultar)
+                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -141,7 +153,28 @@ public class consultaRegion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+public void cargar(){
+    if (conexion.crearConexion()) {
+                combo.removeAllItems(); //Vaciamos el JComboBox
+                ArrayList<String> resultat;
+                ArrayList<String> ls = new ArrayList<String>();
+                String sql="select region from lugarturistico";
+                ResultSet rs = conexion.ejecutarSQLSelect(sql);
+                try {
+                    while(rs.next()){
+                        
+                        ls.add(rs.getString("region"));
+                    }               
+                } catch (SQLException ex) {
+                    Logger.getLogger(consultaRegion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                resultat = ls;//La consulta tiene que retornar un ArrayList
+                
+                for(int i=0; i<resultat.size();i++){
+                    combo.addItem(resultat.get(i));
+                }
+        }
+    }
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         menuPadre menu = new menuPadre();
         if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir al menú principal?",
@@ -159,8 +192,8 @@ public class consultaRegion extends javax.swing.JFrame {
              DefaultTableModel modelo = new DefaultTableModel (null, titulos); 
              String[] fila = new String[6];    
              
-             String sql="select pais, provincia, ciudad, direccion, comida_tipica, nombre_hotel from lugarturistico where region = '"+id.getText()+"'";
-             
+             //String sql="select pais, provincia, ciudad, direccion, comida_tipica, nombre_hotel from lugarturistico where region = '"+id.getText()+"'";
+             String sql="select pais, provincia, ciudad, direccion, comida_tipica, nombre_hotel from lugarturistico where region = '"+combo.getSelectedItem().toString()+"'";
              try{
             ResultSet rs = conexion.ejecutarSQLSelect(sql);
             
@@ -182,14 +215,17 @@ public class consultaRegion extends javax.swing.JFrame {
 
              
         }else{
-                id.setText("");
-                JOptionPane.showMessageDialog(rootPane,"La región ingresada no es válida");
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
-    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idActionPerformed
+    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+        
+    }//GEN-LAST:event_comboActionPerformed
+
+    private void comboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboMouseClicked
+        
+        
+    }//GEN-LAST:event_comboMouseClicked
 
     /**
      * @param args the command line arguments
@@ -223,14 +259,16 @@ public class consultaRegion extends javax.swing.JFrame {
             public void run() {
                 new consultaRegion().setVisible(true);
                 
+                
             }
+            
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JTextField id;
+    public static javax.swing.JComboBox combo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
