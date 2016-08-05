@@ -512,7 +512,7 @@ public static conexion conexion = new conexion();
                     evt.consume();
                 }
     }//GEN-LAST:event_ingresoDireccionKeyTyped
-
+//
     /**
      * @param args the command line arguments
      */

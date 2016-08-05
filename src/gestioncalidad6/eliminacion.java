@@ -228,7 +228,7 @@ public static int bandera =0;
           
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+//
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         menuPadre menu = new menuPadre();
         if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir al menú principal?",
