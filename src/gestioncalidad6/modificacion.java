@@ -118,6 +118,23 @@ public static conexion conexion = new conexion();
                 numAdultosActionPerformed(evt);
             }
         });
+        numAdultos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                numAdultosKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                numAdultosKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                numAdultosKeyTyped(evt);
+            }
+        });
+
+        numNiños.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                numNiñosKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelOcultoLayout = new javax.swing.GroupLayout(panelOculto);
         panelOculto.setLayout(panelOcultoLayout);
@@ -362,9 +379,33 @@ public static conexion conexion = new conexion();
         if (conexion.crearConexion()) {
             String seguro = String.valueOf(siSeguro.isSelected());
             String frecuente = String.valueOf(siFrecuente.isSelected());
-            //String acompa = String.valueOf(siAcompañantes.isSelected());
-             String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"'"
-                     + ",cliente_frecuente = '"+frecuente+"',seguro_viaje ='"+seguro+"' where cedula = "+id.getText();
+            String acompa = String.valueOf(siAcompañantes.isSelected());
+            String numNino, numAdulto;
+            if (acompa.equals("true")) {
+                numAdulto=numAdultos.getText();
+                numNino= numNiños.getText();
+                /*if ((numNino.equals("0") && numAdulto.equals("0"))||(numNino.equals("00") && numAdulto.equals("00"))) {
+                    JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
+                }else{
+                
+                        }*/
+            }else{
+                numNino = "0";
+                numAdulto ="0";
+            }
+            //
+            if ((numNino.equals("0") && numAdulto.equals("0"))
+                    ||
+                    (numNino.equals("00") && numAdulto.equals("00"))
+                    ||
+                    (numNino.equals("0") && numAdulto.equals("00"))
+                    ||
+                    (numNino.equals("00") && numAdulto.equals("0"))
+                    ) {
+                    JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
+                }else{
+                        String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"'"
+                     + ",cliente_frecuente = '"+frecuente+"',seguro_viaje ='"+seguro+"',acompanantes = '"+acompa+"',adultos='"+numAdulto+"',ninos = '"+numNino+"' where cedula = "+id.getText();
              try{
             conexion.ejecutarSQL(sql);
             JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
@@ -377,15 +418,22 @@ public static conexion conexion = new conexion();
                 siFrecuente.setSelected(false);
                 siSeguro.setSelected(false);
                 siAcompañantes.setSelected(false);
+                numAdultos.setText("");
+                numNiños.setText("");
                 
             
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+            }
+                catch(Exception ex){
+               JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
+                        }
+             
+             //
+             
             }
           
-            }
-        }else{JOptionPane.showMessageDialog(rootPane,"ingrese turista a modificar");}
+        }
+      }else{JOptionPane.showMessageDialog(rootPane,"ingrese turista a modificar");}
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void numAdultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numAdultosActionPerformed
@@ -435,8 +483,10 @@ public static conexion conexion = new conexion();
                 siFrecuente.setSelected(false);
                 siSeguro.setSelected(false);
                 siAcompañantes.setSelected(false);
-            String nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes;
-             String sql="select nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes "
+                numAdultos.setText("");
+                numNiños.setText("");
+            String nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes,adultos,ninos;
+             String sql="select nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes,adultos,ninos "
                      + "from \"infoturista\" where cedula = "+id.getText();
              
              try{
@@ -451,6 +501,8 @@ public static conexion conexion = new conexion();
                 cliente_frecuente = rs.getString(7);
                 seguro_viaje = rs.getString(8);
                 acompanantes = rs.getString(9);
+                adultos =rs.getString(10);
+               ninos =rs.getString(11);
                
                 ingresoNombres.setText(nombres);
                 ingresoApellidos.setText(apellidos);
@@ -458,6 +510,9 @@ public static conexion conexion = new conexion();
                 ingresoCorreo.setText(correo);
                 ingresoCiudad.setText(ciudad);
                 ingresoDireccion.setText(direccion);
+                numAdultos.setText(adultos);
+                numNiños.setText(ninos);
+                
                 if (cliente_frecuente.equals("f")) {
                     siFrecuente.setSelected(false);
                 }else{siFrecuente.setSelected(true);}
@@ -465,10 +520,16 @@ public static conexion conexion = new conexion();
                     siSeguro.setSelected(false);
                 }else{siSeguro.setSelected(true);}
                 
-                /*if (acompanantes.equals("f")) {
+                if (acompanantes.equals("f")) {
                     siAcompañantes.setSelected(false);
-                }else{siAcompañantes.setSelected(true);}
-                */
+                    panelOculto.setVisible(false);
+                    bandera=0;
+                }else{
+                    siAcompañantes.setSelected(true);
+                    panelOculto.setVisible(true);
+                    bandera=1;
+                }
+                
                 
                 
             }
@@ -489,6 +550,8 @@ public static conexion conexion = new conexion();
                 siFrecuente.setSelected(false);
                 siSeguro.setSelected(false);
                 siAcompañantes.setSelected(false);
+                numAdultos.setText("");
+                numNiños.setText("");
         }
                 
         
@@ -532,6 +595,38 @@ public static conexion conexion = new conexion();
                     evt.consume();
                 }
     }//GEN-LAST:event_ingresoNombresKeyTyped
+
+    private void numAdultosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numAdultosKeyTyped
+        char c=evt.getKeyChar();
+
+        if(!Character.isDigit(c)) {
+            evt.consume();
+        }
+        if (numAdultos.getText().length()>=2){
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_numAdultosKeyTyped
+
+    private void numNiñosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numNiñosKeyTyped
+        char c=evt.getKeyChar();
+
+        if(!Character.isDigit(c)) {
+            evt.consume();
+        }
+        if (numNiños.getText().length()>=2){
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_numNiñosKeyTyped
+
+    private void numAdultosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numAdultosKeyReleased
+        
+    }//GEN-LAST:event_numAdultosKeyReleased
+
+    private void numAdultosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numAdultosKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numAdultosKeyPressed
 
     /**
      * @param args the command line arguments
