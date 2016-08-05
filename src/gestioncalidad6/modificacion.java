@@ -6,6 +6,7 @@
 
 package gestioncalidad6;
 
+import java.awt.Color;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
@@ -229,6 +230,15 @@ public static conexion conexion = new conexion();
 
         jLabel5.setText("Ciudad");
 
+        ingresoCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ingresoCedulaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoCedulaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
         contenedor.setLayout(contenedorLayout);
         contenedorLayout.setHorizontalGroup(
@@ -433,7 +443,7 @@ public static conexion conexion = new conexion();
             }
           
         }
-      }else{JOptionPane.showMessageDialog(rootPane,"ingrese turista a modificar");}
+      }else{JOptionPane.showMessageDialog(rootPane,"datos incorrectos");}
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void numAdultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numAdultosActionPerformed
@@ -627,6 +637,30 @@ public static conexion conexion = new conexion();
     private void numAdultosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numAdultosKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_numAdultosKeyPressed
+
+    private void ingresoCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoCedulaKeyTyped
+        char c=evt.getKeyChar(); 
+          
+         if(!Character.isDigit(c)) {  
+              evt.consume(); 
+          }
+         if (ingresoCedula.getText().length()>=10){
+            evt.consume();     
+        }
+    }//GEN-LAST:event_ingresoCedulaKeyTyped
+
+    private void ingresoCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoCedulaKeyReleased
+        if (ingresoCedula.getText().length()==10){
+            
+             if (conexion.validadorDeCedula(ingresoCedula.getText())) {
+                 ingresoCedula.setBackground(Color.WHITE);
+                 JOptionPane.showMessageDialog(rootPane,"cedula correcta");
+             }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");
+                    ingresoCedula.setBackground(Color.red);
+             }
+             
+        }
+    }//GEN-LAST:event_ingresoCedulaKeyReleased
 
     /**
      * @param args the command line arguments

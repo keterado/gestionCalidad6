@@ -382,6 +382,10 @@
         <Component class="javax.swing.JTextField" name="ingresoCorreo">
         </Component>
         <Component class="javax.swing.JTextField" name="ingresoCedula">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoCedulaKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoCedulaKeyTyped"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
