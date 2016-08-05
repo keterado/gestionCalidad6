@@ -360,8 +360,11 @@ public static conexion conexion = new conexion();
                 "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
        {
         if (conexion.crearConexion()) {
-            
-             String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"' where cedula = "+id.getText();
+            String seguro = String.valueOf(siSeguro.isSelected());
+            String frecuente = String.valueOf(siFrecuente.isSelected());
+            //String acompa = String.valueOf(siAcompañantes.isSelected());
+             String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"'"
+                     + ",cliente_frecuente = '"+frecuente+"',seguro_viaje ='"+seguro+"' where cedula = "+id.getText();
              try{
             conexion.ejecutarSQL(sql);
             JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
@@ -372,6 +375,9 @@ public static conexion conexion = new conexion();
                 ingresoCiudad.setText("");
                 ingresoDireccion.setText("");
                 siFrecuente.setSelected(false);
+                siSeguro.setSelected(false);
+                siAcompañantes.setSelected(false);
+                
             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
@@ -427,6 +433,8 @@ public static conexion conexion = new conexion();
                 ingresoCiudad.setText("");
                 ingresoDireccion.setText("");
                 siFrecuente.setSelected(false);
+                siSeguro.setSelected(false);
+                siAcompañantes.setSelected(false);
             String nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes;
              String sql="select nombres,apellidos, cedula, correo, ciudad, direccion, cliente_frecuente, seguro_viaje,acompanantes "
                      + "from \"infoturista\" where cedula = "+id.getText();
@@ -450,9 +458,18 @@ public static conexion conexion = new conexion();
                 ingresoCorreo.setText(correo);
                 ingresoCiudad.setText(ciudad);
                 ingresoDireccion.setText(direccion);
-                if (cliente_frecuente=="false"||cliente_frecuente=="f") {
+                if (cliente_frecuente.equals("f")) {
                     siFrecuente.setSelected(false);
                 }else{siFrecuente.setSelected(true);}
+                if (seguro_viaje.equals("f")) {
+                    siSeguro.setSelected(false);
+                }else{siSeguro.setSelected(true);}
+                
+                /*if (acompanantes.equals("f")) {
+                    siAcompañantes.setSelected(false);
+                }else{siAcompañantes.setSelected(true);}
+                */
+                
                 
             }
         }catch(Exception ex){
@@ -469,7 +486,11 @@ public static conexion conexion = new conexion();
                 ingresoCorreo.setText("");
                 ingresoCiudad.setText("");
                 ingresoDireccion.setText("");
-                siFrecuente.setSelected(false);}
+                siFrecuente.setSelected(false);
+                siSeguro.setSelected(false);
+                siAcompañantes.setSelected(false);
+        }
+                
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
