@@ -34,7 +34,11 @@
                       <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       <Component id="btnMenuPrincipal" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
+                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -46,26 +50,26 @@
                           <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="panelOculto" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="siAcompañantes" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ingresoCedula" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
-                          <Component id="siFrecuente" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="siSeguro" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ingresoCiudad" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="ingresoCorreo" alignment="0" pref="367" max="32767" attributes="0"/>
-                              <Component id="ingresoApellidos" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ingresoNombres" alignment="0" max="32767" attributes="0"/>
+                          <Component id="id_lu" min="-2" pref="69" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="panelOculto" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="siAcompañantes" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="siFrecuente" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="siSeguro" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="ingresoCiudad" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="ingresoCorreo" alignment="0" pref="367" max="32767" attributes="0"/>
+                                  <Component id="ingresoApellidos" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="ingresoNombres" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="ingresoDireccion" alignment="1" min="-2" pref="367" max="-2" attributes="0"/>
+                              <Component id="id" min="-2" pref="159" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="ingresoDireccion" alignment="1" min="-2" pref="367" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
-                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="55" max="32767" attributes="0"/>
@@ -78,23 +82,23 @@
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ingresoNombres" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ingresoApellidos" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <Component id="id" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ingresoNombres" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ingresoApellidos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ingresoCedula" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="ingresoCorreo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -109,10 +113,15 @@
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="ingresoDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="id_lu" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="siFrecuente" min="-2" max="-2" attributes="0"/>
+                  <Component id="siFrecuente" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -186,17 +195,25 @@
     <Component class="javax.swing.JTextField" name="ingresoNombres">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingresoNombresActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoNombresKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="ingresoApellidos">
-    </Component>
-    <Component class="javax.swing.JTextField" name="ingresoCedula">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoApellidosKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="ingresoCorreo">
     </Component>
     <Component class="javax.swing.JTextField" name="ingresoCiudad">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoCiudadKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="ingresoDireccion">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoDireccionKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="siFrecuente">
       <Properties>
@@ -320,6 +337,26 @@
         </Property>
         <Property name="text" type="java.lang.String" value="INGRESO DE TURISTAS"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="id">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="idKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="idKeyTyped"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lugar Tur&#xed;stico"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="id_lu">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="id_luActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

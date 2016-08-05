@@ -6,6 +6,10 @@
 
 package gestioncalidad6;
 
+import static gestioncalidad6.eliminacion.conexion;
+import static gestioncalidad6.eliminacion.txtCedula;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class ingreso extends javax.swing.JFrame {
 int bandera = 0;
+public static conexion conexion = new conexion();
     /**
      * Creates new form ingreso
      */
@@ -44,7 +49,6 @@ int bandera = 0;
         jLabel10 = new javax.swing.JLabel();
         ingresoNombres = new javax.swing.JTextField();
         ingresoApellidos = new javax.swing.JTextField();
-        ingresoCedula = new javax.swing.JTextField();
         ingresoCorreo = new javax.swing.JTextField();
         ingresoCiudad = new javax.swing.JTextField();
         ingresoDireccion = new javax.swing.JTextField();
@@ -60,6 +64,9 @@ int bandera = 0;
         numAdultos = new javax.swing.JTextField();
         numNiños = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        id = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        id_lu = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -85,6 +92,29 @@ int bandera = 0;
         ingresoNombres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresoNombresActionPerformed(evt);
+            }
+        });
+        ingresoNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoNombresKeyTyped(evt);
+            }
+        });
+
+        ingresoApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoApellidosKeyTyped(evt);
+            }
+        });
+
+        ingresoCiudad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoCiudadKeyTyped(evt);
+            }
+        });
+
+        ingresoDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoDireccionKeyTyped(evt);
             }
         });
 
@@ -178,6 +208,28 @@ int bandera = 0;
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setText("INGRESO DE TURISTAS");
 
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
+        id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                idKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idKeyTyped(evt);
+            }
+        });
+
+        jLabel7.setText("Lugar Turístico");
+
+        id_lu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_luActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,6 +244,9 @@ int bandera = 0;
                         .addGap(54, 54, 54)
                         .addComponent(btnMenuPrincipal))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(jLabel13))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -202,23 +257,23 @@ int bandera = 0;
                             .addComponent(jLabel6)
                             .addComponent(jLabel10)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelOculto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(siAcompañantes)
-                            .addComponent(ingresoCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(siFrecuente)
-                            .addComponent(siSeguro)
-                            .addComponent(ingresoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(ingresoCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                                .addComponent(ingresoApellidos, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ingresoNombres, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(ingresoDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addComponent(jLabel13)))
+                            .addComponent(id_lu, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(panelOculto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(siAcompañantes)
+                                .addComponent(siFrecuente)
+                                .addComponent(siSeguro)
+                                .addComponent(ingresoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(ingresoCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                                    .addComponent(ingresoApellidos, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ingresoNombres, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(ingresoDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -227,20 +282,20 @@ int bandera = 0;
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(ingresoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(ingresoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(ingresoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(ingresoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(ingresoCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                    .addComponent(jLabel3)
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(ingresoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -252,9 +307,13 @@ int bandera = 0;
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(ingresoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(id_lu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
                         .addComponent(jLabel8))
-                    .addComponent(siFrecuente))
+                    .addComponent(siFrecuente, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -289,7 +348,69 @@ int bandera = 0;
     }//GEN-LAST:event_siSeguroActionPerformed
 
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
-        // TODO add your handling code here:
+        
+        boolean acompanantes = false;
+        boolean frecuente = false;
+        boolean seguro = false;
+        
+        if (siAcompañantes.isSelected()) {
+            acompanantes = true;            
+        }else{
+            acompanantes = false;
+            numAdultos.setText("0");
+            numNiños.setText("0");
+        }
+        
+        if (siFrecuente.isSelected()) {
+            frecuente = true;
+        }
+        
+        if (siSeguro.isSelected()) {
+            seguro = true;
+        }
+        
+        if (conexion.crearConexion()) {
+            if ((numNiños.getText().equals("0") && numAdultos.getText().equals("0"))
+                    ||
+                    (numNiños.getText().equals("00") && numAdultos.getText().equals("00"))
+                    ||
+                    (numNiños.getText().equals("0") && numAdultos.getText().equals("00"))
+                    ||
+                    (numNiños.getText().equals("00") && numAdultos.getText().equals("0"))) {
+                        JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
+            } else{
+             String sql="insert into infoturista values ('"+ingresoNombres.getText()+"','"+ingresoApellidos.getText()+"','"+ingresoCorreo.getText()+"','"
+                     +ingresoDireccion.getText()+"','"+ingresoCiudad.getText()+"',"+String.valueOf(frecuente)+","+String.valueOf(seguro)+","+Integer.parseInt(id_lu.getText())+","
+                     +Integer.parseInt(id.getText())+","+String.valueOf(acompanantes)+","+Integer.parseInt(numAdultos.getText())+","+Integer.parseInt(numNiños.getText())+")";
+             
+             try{
+                ResultSet rs = conexion.ejecutarSQLSelect(sql);
+                }catch(Exception ex){
+                        ingresoNombres.setText("");
+                        ingresoApellidos.setText("");
+                        ingresoCorreo.setText("");
+                        ingresoDireccion.setText("");
+                        ingresoCiudad.setText("");
+                        id_lu.setText("");
+                        id.setText("");
+                        numAdultos.setText("");
+                        numNiños.setText("");
+
+                    JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
+                }
+            }        
+             
+             
+             
+        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");
+                ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCorreo.setText("");
+                ingresoDireccion.setText("");
+                ingresoCiudad.setText("");
+                id_lu.setText("");
+                id.setText("");
+                }
     }//GEN-LAST:event_btnGrabarActionPerformed
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
@@ -320,6 +441,77 @@ int bandera = 0;
         }
        
     }//GEN-LAST:event_siAcompañantesMouseClicked
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
+
+    private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
+        if (id.getText().length()==10){
+
+            if (conexion.validadorDeCedula(id.getText())) {
+                JOptionPane.showMessageDialog(rootPane,"cedula correcta");
+            }else{JOptionPane.showMessageDialog(rootPane,"cedula incorrecta");}
+
+        }
+    }//GEN-LAST:event_idKeyReleased
+
+    private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
+        char c=evt.getKeyChar();
+
+        if(!Character.isDigit(c)) {
+            evt.consume();
+        }
+        if (id.getText().length()>=10){
+            evt.consume();
+
+        }
+
+    }//GEN-LAST:event_idKeyTyped
+
+    private void id_luActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_luActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_id_luActionPerformed
+
+    private void ingresoNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoNombresKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoNombresKeyTyped
+
+    private void ingresoApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoApellidosKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoApellidosKeyTyped
+
+    private void ingresoCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoCiudadKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoCiudadKeyTyped
+
+    private void ingresoDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoDireccionKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoDireccionKeyTyped
 
     /**
      * @param args the command line arguments
@@ -362,8 +554,9 @@ int bandera = 0;
     private javax.swing.JButton btnGrabar;
     private javax.swing.JButton btnMenuPrincipal;
     private javax.swing.JButton btnVaciar;
+    private javax.swing.JTextField id;
+    private javax.swing.JTextField id_lu;
     private javax.swing.JTextField ingresoApellidos;
-    private javax.swing.JTextField ingresoCedula;
     private javax.swing.JTextField ingresoCiudad;
     private javax.swing.JTextField ingresoCorreo;
     private javax.swing.JTextField ingresoDireccion;
@@ -378,6 +571,7 @@ int bandera = 0;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField numAdultos;

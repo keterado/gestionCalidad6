@@ -222,6 +222,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="ingresoDireccion">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoDireccionKeyTyped"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="panelOculto">
           <AuxValues>
@@ -307,6 +310,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="ingresoApellidos">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoApellidosKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
@@ -336,6 +342,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="ingresoCiudad">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ingresoCiudadKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>

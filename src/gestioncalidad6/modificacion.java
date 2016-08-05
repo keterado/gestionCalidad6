@@ -7,6 +7,7 @@
 package gestioncalidad6;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
@@ -110,6 +111,12 @@ public static conexion conexion = new conexion();
             }
         });
 
+        ingresoDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoDireccionKeyTyped(evt);
+            }
+        });
+
         jLabel11.setText("Adultos");
 
         jLabel12.setText("Niños");
@@ -179,6 +186,12 @@ public static conexion conexion = new conexion();
             }
         });
 
+        ingresoApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoApellidosKeyTyped(evt);
+            }
+        });
+
         jLabel10.setText("Acompañantes");
 
         jLabel1.setText("Nombres");
@@ -200,6 +213,12 @@ public static conexion conexion = new conexion();
         });
 
         jLabel8.setText("Cliente frecuente");
+
+        ingresoCiudad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ingresoCiudadKeyTyped(evt);
+            }
+        });
 
         jLabel9.setText("Seguro de viaje");
 
@@ -598,7 +617,7 @@ public static conexion conexion = new conexion();
 
     private void ingresoNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoNombresKeyTyped
         Character c = evt.getKeyChar();
-                if(Character.isLetter(c)) {
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }else{
                     
@@ -661,6 +680,36 @@ public static conexion conexion = new conexion();
              
         }
     }//GEN-LAST:event_ingresoCedulaKeyReleased
+
+    private void ingresoApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoApellidosKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoApellidosKeyTyped
+
+    private void ingresoCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoCiudadKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoCiudadKeyTyped
+
+    private void ingresoDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoDireccionKeyTyped
+        Character c = evt.getKeyChar();
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                    evt.setKeyChar(Character.toUpperCase(c));
+                }else{
+                    
+                    evt.consume();
+                }
+    }//GEN-LAST:event_ingresoDireccionKeyTyped
 
     /**
      * @param args the command line arguments
