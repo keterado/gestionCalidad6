@@ -8,6 +8,10 @@ package gestioncalidad6;
 
 import static gestioncalidad6.consultaTurista.conexion;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +26,7 @@ public class consultaHotel extends javax.swing.JFrame {
     public consultaHotel() {
         initComponents();
                 this.setLocationRelativeTo(null);
+                cargar();
     }
 
     /**
@@ -45,13 +50,12 @@ public class consultaHotel extends javax.swing.JFrame {
         direccion = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         comida = new javax.swing.JTextField();
-        id = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnConsultar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         vaciar = new javax.swing.JButton();
-        comoId = new javax.swing.JComboBox();
+        combo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -106,10 +110,15 @@ public class consultaHotel extends javax.swing.JFrame {
             }
         });
 
-        comoId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Playa", "Campo", "Montaña", "Bosque", "Isla" }));
-        comoId.addActionListener(new java.awt.event.ActionListener() {
+        combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", " " }));
+        combo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboMouseClicked(evt);
+            }
+        });
+        combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comoIdActionPerformed(evt);
+                comboActionPerformed(evt);
             }
         });
 
@@ -120,35 +129,38 @@ public class consultaHotel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(region, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comida, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                            .addComponent(direccion))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnSalir))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultar)
-                        .addGap(54, 54, 54))))
+                                .addGap(18, 18, 18)
+                                .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(137, 137, 137))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnConsultar)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(region, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comida, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                                    .addComponent(direccion))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -156,25 +168,20 @@ public class consultaHotel extends javax.swing.JFrame {
                         .addComponent(vaciar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
-                        .addComponent(jLabel8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(comoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel8)))
+                .addGap(0, 104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addGap(17, 17, 17)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(btnConsultar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(pais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,7 +214,28 @@ public class consultaHotel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+public void cargar(){
+    if (conexion.crearConexion()) {
+                combo.removeAllItems(); //Vaciamos el JComboBox
+                ArrayList<String> resultat;
+                ArrayList<String> ls = new ArrayList<String>();
+                String sql="select nombre_hotel from lugarturistico";
+                ResultSet rs = conexion.ejecutarSQLSelect(sql);
+                try {
+                    while(rs.next()){
+                        
+                        ls.add(rs.getString("nombre_hotel"));
+                    }               
+                } catch (SQLException ex) {
+                    Logger.getLogger(consultaRegion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                resultat = ls;//La consulta tiene que retornar un ArrayList
+                
+                for(int i=0; i<resultat.size();i++){
+                    combo.addItem(resultat.get(i));
+                }
+        }
+    }
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         menuPadre menu = new menuPadre();
         if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir al menú principal?",
@@ -227,7 +255,8 @@ public class consultaHotel extends javax.swing.JFrame {
                 direccion.setText("");
                 comida.setText("");
             String ipais, iprovincia, iregion, iciudad, idireccion, icomida;
-             String sql="select pais, provincia, ciudad, direccion,  region, comida_tipica from lugarturistico where nombre_hotel = '"+id.getText()+"'";
+             //String sql="select pais, provincia, ciudad, direccion,  region, comida_tipica from lugarturistico where nombre_hotel = '"+id.getText()+"'";
+             String sql="select pais, provincia, ciudad, direccion,  region, comida_tipica from lugarturistico where nombre_hotel = '"+combo.getSelectedItem().toString()+"'";
              
              try{
             ResultSet rs = conexion.ejecutarSQLSelect(sql);
@@ -262,13 +291,13 @@ public class consultaHotel extends javax.swing.JFrame {
                 ciudad.setText("");
                 direccion.setText("");
                 comida.setText("");
-                id.setText("");
+                //id.setText("");
                 JOptionPane.showMessageDialog(rootPane,"El hotel ingresado no se encuentra en nuestra base de datos");
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void vaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaciarActionPerformed
-        id.setText("");
+        //id.setText("");
         pais.setText("");
         provincia.setText("");
         region.setText("");
@@ -277,9 +306,13 @@ public class consultaHotel extends javax.swing.JFrame {
         comida.setText("");
     }//GEN-LAST:event_vaciarActionPerformed
 
-    private void comoIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comoIdActionPerformed
-        
-    }//GEN-LAST:event_comoIdActionPerformed
+    private void comboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboMouseClicked
+
+    }//GEN-LAST:event_comboMouseClicked
+
+    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+
+    }//GEN-LAST:event_comboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,10 +353,9 @@ public class consultaHotel extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JTextField ciudad;
+    public static javax.swing.JComboBox combo;
     private javax.swing.JTextField comida;
-    private javax.swing.JComboBox comoId;
     private javax.swing.JTextField direccion;
-    private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
