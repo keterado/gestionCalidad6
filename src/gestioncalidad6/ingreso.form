@@ -243,6 +243,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="VACIAR CAMPOS"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVaciarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGrabar">
       <Properties>
@@ -356,6 +359,7 @@
     <Component class="javax.swing.JTextField" name="id_lu">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="id_luActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="id_luKeyTyped"/>
       </Events>
     </Component>
   </SubComponents>

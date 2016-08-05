@@ -140,6 +140,11 @@ public static conexion conexion = new conexion();
         });
 
         btnVaciar.setText("VACIAR CAMPOS");
+        btnVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVaciarActionPerformed(evt);
+            }
+        });
 
         btnGrabar.setText("GRABAR");
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
@@ -227,6 +232,11 @@ public static conexion conexion = new conexion();
         id_lu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 id_luActionPerformed(evt);
+            }
+        });
+        id_lu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                id_luKeyTyped(evt);
             }
         });
 
@@ -349,28 +359,29 @@ public static conexion conexion = new conexion();
 
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         
-        boolean acompanantes = false;
         boolean frecuente = false;
         boolean seguro = false;
-        
-        if (siAcompañantes.isSelected()) {
-            acompanantes = true;            
-        }else{
-            acompanantes = false;
-            numAdultos.setText("0");
-            numNiños.setText("0");
-        }
-        
-        if (siFrecuente.isSelected()) {
-            frecuente = true;
-        }
-        
-        if (siSeguro.isSelected()) {
-            seguro = true;
-        }
-        
-        if (conexion.crearConexion()) {
-            if ((numNiños.getText().equals("0") && numAdultos.getText().equals("0"))
+        String acompa = String.valueOf(siAcompañantes.isSelected());
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente ingresar al turista?",
+                "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION )
+        {    
+        if (conexion.crearConexion()) {       
+            if (siFrecuente.isSelected()) {
+                frecuente = true;
+            }
+
+            if (siSeguro.isSelected()) {
+                seguro = true;
+            }
+            
+            if (acompa.equals("true")) {
+                if (numNiños.getText().equals("")) {
+                    numNiños.setText("0");
+                }
+                if (numAdultos.getText().equals("")) {
+                    numAdultos.setText("0");
+                }
+                if ((numNiños.getText().equals("0") && numAdultos.getText().equals("0"))
                     ||
                     (numNiños.getText().equals("00") && numAdultos.getText().equals("00"))
                     ||
@@ -378,13 +389,18 @@ public static conexion conexion = new conexion();
                     ||
                     (numNiños.getText().equals("00") && numAdultos.getText().equals("0"))) {
                         JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
-            } else{
+                } 
+               
+            }else{
+                numAdultos.setText("0");
+                numNiños.setText("0");
+            }
              String sql="insert into infoturista values ('"+ingresoNombres.getText()+"','"+ingresoApellidos.getText()+"','"+ingresoCorreo.getText()+"','"
                      +ingresoDireccion.getText()+"','"+ingresoCiudad.getText()+"',"+String.valueOf(frecuente)+","+String.valueOf(seguro)+","+Integer.parseInt(id_lu.getText())+","
-                     +Integer.parseInt(id.getText())+","+String.valueOf(acompanantes)+","+Integer.parseInt(numAdultos.getText())+","+Integer.parseInt(numNiños.getText())+")";
+                     +Integer.parseInt(id.getText())+","+acompa+","+Integer.parseInt(numAdultos.getText())+","+Integer.parseInt(numNiños.getText())+")";
              
              try{
-                ResultSet rs = conexion.ejecutarSQLSelect(sql);
+                conexion.ejecutarSQLSelect(sql);
                 }catch(Exception ex){
                         ingresoNombres.setText("");
                         ingresoApellidos.setText("");
@@ -398,10 +414,7 @@ public static conexion conexion = new conexion();
 
                     JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
-            }        
-             
-             
-             
+          
         }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");
                 ingresoNombres.setText("");
                 ingresoApellidos.setText("");
@@ -410,7 +423,20 @@ public static conexion conexion = new conexion();
                 ingresoCiudad.setText("");
                 id_lu.setText("");
                 id.setText("");
-                }
+                }                        
+        }        
+                ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCorreo.setText("");
+                ingresoDireccion.setText("");
+                ingresoCiudad.setText("");
+                id_lu.setText("");
+                id.setText("");
+                siFrecuente.setSelected(false);
+                siSeguro.setSelected(false);
+                siAcompañantes.setSelected(false);
+                numNiños.setText("");
+                numAdultos.setText("");
     }//GEN-LAST:event_btnGrabarActionPerformed
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
@@ -505,13 +531,39 @@ public static conexion conexion = new conexion();
 
     private void ingresoDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoDireccionKeyTyped
         Character c = evt.getKeyChar();
-                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
+                if(Character.isLetter(c) || c == KeyEvent.VK_SPACE || Character.isDigit(c)) {
                     evt.setKeyChar(Character.toUpperCase(c));
                 }else{
                     
                     evt.consume();
                 }
     }//GEN-LAST:event_ingresoDireccionKeyTyped
+
+    private void id_luKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_luKeyTyped
+        char c=evt.getKeyChar(); 
+          
+         if(!Character.isDigit(c)) {  
+              evt.consume(); 
+          }
+         if (id_lu.getText().length()>=2){
+            evt.consume();     
+        }
+    }//GEN-LAST:event_id_luKeyTyped
+
+    private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
+        ingresoNombres.setText("");
+                ingresoApellidos.setText("");
+                ingresoCorreo.setText("");
+                ingresoDireccion.setText("");
+                ingresoCiudad.setText("");
+                id_lu.setText("");
+                id.setText("");
+                siFrecuente.setSelected(false);
+                siSeguro.setSelected(false);
+                siAcompañantes.setSelected(false);
+                numNiños.setText("");
+                numAdultos.setText("");
+    }//GEN-LAST:event_btnVaciarActionPerformed
 //
     /**
      * @param args the command line arguments
