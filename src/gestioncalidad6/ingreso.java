@@ -365,7 +365,8 @@ public static conexion conexion = new conexion();
         if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente ingresar al turista?",
                 "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION )
         {    
-        if (conexion.crearConexion()) {       
+        if (conexion.crearConexion() && (!ingresoNombres.getText().equals("") && !ingresoApellidos.getText().equals("") &&
+                !ingresoCorreo.getText().equals("") && !ingresoDireccion.getText().equals("") && !ingresoCiudad.getText().equals(""))) {       
             if (siFrecuente.isSelected()) {
                 frecuente = true;
             }
@@ -415,7 +416,7 @@ public static conexion conexion = new conexion();
                     JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
           
-        }else{JOptionPane.showMessageDialog(rootPane,"ingresa una cedula correcta");
+        }else{JOptionPane.showMessageDialog(rootPane,"Por favor, ingrese todos los campos correctamente");
                 ingresoNombres.setText("");
                 ingresoApellidos.setText("");
                 ingresoCorreo.setText("");
