@@ -32,6 +32,7 @@ public class menuPadre extends javax.swing.JFrame {
     private void initComponents() {
 
         btnCerrar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
         MenuIngreso = new javax.swing.JMenu();
         ingresarTurista = new javax.swing.JMenuItem();
@@ -46,6 +47,7 @@ public class menuPadre extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 255, 255));
         setResizable(false);
 
         btnCerrar.setText("Salir");
@@ -54,6 +56,9 @@ public class menuPadre extends javax.swing.JFrame {
                 btnCerrarActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+        jLabel1.setText("AGENCIA DE VIAJES");
 
         MenuIngreso.setText("Ingresar");
         MenuIngreso.addActionListener(new java.awt.event.ActionListener() {
@@ -139,14 +144,21 @@ public class menuPadre extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(btnCerrar)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(btnCerrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jLabel1)))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(217, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(btnCerrar)
                 .addGap(39, 39, 39))
         );
@@ -251,6 +263,7 @@ public class menuPadre extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JMenu eliminarTurista;
     private javax.swing.JMenuItem ingresarTurista;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
