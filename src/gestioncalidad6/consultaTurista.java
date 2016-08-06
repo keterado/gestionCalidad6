@@ -228,7 +228,7 @@ public static conexion conexion = new conexion();
                 hotel.setText("");
             String ipais, iprovincia, iregion, iciudad, idireccion, icomida, ihotel;
              String sql="select l.pais, l.provincia, l.ciudad, l.region, l.direccion, l.comida_tipica, l.nombre_hotel "
-                     + "from lugarturistico l inner join infoturista i on (i.id_lutu = l.id) where cedula = "+id.getText();
+                     + "from lugarturistico l inner join infoturista i on (i.lutu = l.id) where cedula = "+id.getText();
              
              try{
             ResultSet rs = conexion.ejecutarSQLSelect(sql);

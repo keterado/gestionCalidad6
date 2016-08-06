@@ -158,7 +158,7 @@ public void cargar(){
                 combo.removeAllItems(); //Vaciamos el JComboBox
                 ArrayList<String> resultat;
                 ArrayList<String> ls = new ArrayList<String>();
-                String sql="select region from lugarturistico";
+                String sql="select DISTINCT region from lugarturistico";
                 ResultSet rs = conexion.ejecutarSQLSelect(sql);
                 try {
                     while(rs.next()){

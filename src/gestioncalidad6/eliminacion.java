@@ -242,7 +242,7 @@ public static int bandera =0;
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (conexion.crearConexion()&& conexion.validadorDeCedula(id.getText())) {
             String apellidos, cedula;
-             String sql="select apellidos, cedula from \"infoturista\" where cedula = "+id.getText();
+             String sql="select apellidos, cedula from infoturista where cedula = "+id.getText();
              
              try{
             ResultSet rs = conexion.ejecutarSQLSelect(sql);
@@ -266,13 +266,13 @@ public static int bandera =0;
                 txtApellidos.setText("");
                 txtCedula.setText("");
                 }
-        if (bandera != 0) {
+        /*if (bandera != 0) {
             if (id.getText()!=txtCedula.getText()) {
                 txtApellidos.setText("");
                 txtCedula.setText("");
             }
         }
-        bandera =1;
+        bandera =1;*/
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed

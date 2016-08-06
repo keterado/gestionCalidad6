@@ -10,6 +10,10 @@ import static gestioncalidad6.eliminacion.conexion;
 import static gestioncalidad6.eliminacion.txtCedula;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class ingreso extends javax.swing.JFrame {
 int bandera = 0;
+int bandera1=0;
 public static conexion conexion = new conexion();
     /**
      * Creates new form ingreso
@@ -27,6 +32,7 @@ public static conexion conexion = new conexion();
         initComponents();
         panelOculto.setVisible(false);
         this.setLocationRelativeTo(null);
+        cargar ();
     }
 
     /**
@@ -66,7 +72,7 @@ public static conexion conexion = new conexion();
         jLabel13 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        id_lu = new javax.swing.JTextField();
+        combo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -229,14 +235,15 @@ public static conexion conexion = new conexion();
 
         jLabel7.setText("Lugar Turístico");
 
-        id_lu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                id_luActionPerformed(evt);
+        combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", " " }));
+        combo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboMouseClicked(evt);
             }
         });
-        id_lu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                id_luKeyTyped(evt);
+        combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboActionPerformed(evt);
             }
         });
 
@@ -271,7 +278,9 @@ public static conexion conexion = new conexion();
                             .addComponent(jLabel7))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(id_lu, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(panelOculto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(siAcompañantes)
@@ -320,7 +329,7 @@ public static conexion conexion = new conexion();
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(id_lu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
                         .addComponent(jLabel8))
                     .addComponent(siFrecuente, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -344,7 +353,28 @@ public static conexion conexion = new conexion();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+public void cargar(){
+    if (conexion.crearConexion()) {
+                combo.removeAllItems(); //Vaciamos el JComboBox
+                ArrayList<String> resultat;
+                ArrayList<String> ls = new ArrayList<String>();
+                String sql="select DISTINCT id from lugarturistico";
+                ResultSet rs = conexion.ejecutarSQLSelect(sql);
+                try {
+                    while(rs.next()){
+                        
+                        ls.add(rs.getString("id"));
+                    }               
+                } catch (SQLException ex) {
+                    Logger.getLogger(consultaRegion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                resultat = ls;//La consulta tiene que retornar un ArrayList
+                
+                for(int i=0; i<resultat.size();i++){
+                    combo.addItem(resultat.get(i));
+                }
+        }
+    }
     private void ingresoNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoNombresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ingresoNombresActionPerformed
@@ -365,7 +395,7 @@ public static conexion conexion = new conexion();
         if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente ingresar al turista?",
                 "confirmar acción", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION )
         {    
-        if (conexion.crearConexion() && (!ingresoNombres.getText().equals("") && !ingresoApellidos.getText().equals("") &&
+        if (conexion.crearConexion()&& conexion.validadorDeCedula(id.getText()) && (!ingresoNombres.getText().equals("") && !ingresoApellidos.getText().equals("") &&
                 !ingresoCorreo.getText().equals("") && !ingresoDireccion.getText().equals("") && !ingresoCiudad.getText().equals(""))) {       
             if (siFrecuente.isSelected()) {
                 frecuente = true;
@@ -382,6 +412,7 @@ public static conexion conexion = new conexion();
                 if (numAdultos.getText().equals("")) {
                     numAdultos.setText("0");
                 }
+                bandera1 = 0;
                 if ((numNiños.getText().equals("0") && numAdultos.getText().equals("0"))
                     ||
                     (numNiños.getText().equals("00") && numAdultos.getText().equals("00"))
@@ -390,48 +421,94 @@ public static conexion conexion = new conexion();
                     ||
                     (numNiños.getText().equals("00") && numAdultos.getText().equals("0"))) {
                         JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
+                         bandera1=1;
                 } 
                
             }else{
                 numAdultos.setText("0");
                 numNiños.setText("0");
             }
-             String sql="insert into infoturista values ('"+ingresoNombres.getText()+"','"+ingresoApellidos.getText()+"','"+ingresoCorreo.getText()+"','"
-                     +ingresoDireccion.getText()+"','"+ingresoCiudad.getText()+"',"+String.valueOf(frecuente)+","+String.valueOf(seguro)+","+Integer.parseInt(id_lu.getText())+","
-                     +Integer.parseInt(id.getText())+","+acompa+","+Integer.parseInt(numAdultos.getText())+","+Integer.parseInt(numNiños.getText())+")";
+            if (bandera1==0) {
+             String sql2 = "select cedula from infoturista where cedula = "+Integer.parseInt(id.getText());
              
+            
+                     
              try{
-                conexion.ejecutarSQLSelect(sql);
+                 
+                 String ced = "";
+                 boolean existe = false;
+                 try {
+                     ResultSet rs = conexion.ejecutarSQLSelect(sql2);
+                     
+                     while(rs.next()){
+                         existe = true;
+                         if (existe) {
+                             ced = rs.getString("cedula");
+                             rs.close();
+                             if (id.getText().equals(ced)) {
+                                 JOptionPane.showMessageDialog(rootPane,"La cedula que ingresó ya existe");
+                             }
+                         }
+                     rs.close();
+                     
+                             }if (!existe) {
+                            String sql="insert into infoturista values ('"+ingresoNombres.getText()+"','"+ingresoApellidos.getText()+"','"+ingresoCorreo.getText()+"','"
+                            +ingresoDireccion.getText()+"','"+ingresoCiudad.getText()+"',"+String.valueOf(frecuente)+","+String.valueOf(seguro)+","+Integer.parseInt(combo.getSelectedItem().toString())+","
+                            +Integer.parseInt(id.getText())+","+acompa+","+Integer.parseInt(numAdultos.getText())+","+Integer.parseInt(numNiños.getText())+")";
+                            ingresoNombres.setText("");
+                            ingresoApellidos.setText("");
+                            ingresoCorreo.setText("");
+                            ingresoDireccion.setText("");
+                            ingresoCiudad.setText("");
+                            //id_lu.setText("");
+                            id.setText("");
+                            siFrecuente.setSelected(false);
+                            siSeguro.setSelected(false);
+                            siAcompañantes.setSelected(false);
+
+                            panelOculto.setVisible(false);
+                            bandera=0;
+
+                            numNiños.setText("");
+                            numAdultos.setText("");
+                            conexion.crearConexion();
+                            conexion.ejecutarSQL(sql);
+                            JOptionPane.showMessageDialog(rootPane,"ingreso hecho");
+                     }
+                 }catch(Exception ex){
+                     
+                 }
+                 
+                 //if (rs.first()) {
+                 //    JOptionPane.showMessageDialog(rootPane,"La cedula que ingresó ya existe");
+                // }else{
+                    
+          
+                 //}    
                 }catch(Exception ex){
                         ingresoNombres.setText("");
                         ingresoApellidos.setText("");
                         ingresoCorreo.setText("");
                         ingresoDireccion.setText("");
                         ingresoCiudad.setText("");
-                        id_lu.setText("");
+                        //id_lu.setText("");
                         id.setText("");
                         numAdultos.setText("");
                         numNiños.setText("");
 
                     JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
-          
+            }else{JOptionPane.showMessageDialog(rootPane,"Por favor, ingrese todos los campos correctamente");}
+            
         }else{JOptionPane.showMessageDialog(rootPane,"Por favor, ingrese todos los campos correctamente");
-                ingresoNombres.setText("");
-                ingresoApellidos.setText("");
-                ingresoCorreo.setText("");
-                ingresoDireccion.setText("");
-                ingresoCiudad.setText("");
-                id_lu.setText("");
-                id.setText("");
                 }                        
         }        
-                ingresoNombres.setText("");
+                /*ingresoNombres.setText("");
                 ingresoApellidos.setText("");
                 ingresoCorreo.setText("");
                 ingresoDireccion.setText("");
                 ingresoCiudad.setText("");
-                id_lu.setText("");
+                //id_lu.setText("");
                 id.setText("");
                 siFrecuente.setSelected(false);
                 siSeguro.setSelected(false);
@@ -441,7 +518,7 @@ public static conexion conexion = new conexion();
                 bandera=0;
                 
                 numNiños.setText("");
-                numAdultos.setText("");
+                numAdultos.setText("");*/
     }//GEN-LAST:event_btnGrabarActionPerformed
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
@@ -500,10 +577,6 @@ public static conexion conexion = new conexion();
 
     }//GEN-LAST:event_idKeyTyped
 
-    private void id_luActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_luActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_id_luActionPerformed
-
     private void ingresoNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ingresoNombresKeyTyped
         Character c = evt.getKeyChar();
                 if(Character.isLetter(c) || c == KeyEvent.VK_SPACE) {
@@ -544,31 +617,31 @@ public static conexion conexion = new conexion();
                 }
     }//GEN-LAST:event_ingresoDireccionKeyTyped
 
-    private void id_luKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_luKeyTyped
-        char c=evt.getKeyChar(); 
-          
-         if(!Character.isDigit(c)) {  
-              evt.consume(); 
-          }
-         if (id_lu.getText().length()>=2){
-            evt.consume();     
-        }
-    }//GEN-LAST:event_id_luKeyTyped
-
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
         ingresoNombres.setText("");
                 ingresoApellidos.setText("");
                 ingresoCorreo.setText("");
                 ingresoDireccion.setText("");
                 ingresoCiudad.setText("");
-                id_lu.setText("");
+                //id_lu.setText("");
                 id.setText("");
                 siFrecuente.setSelected(false);
                 siSeguro.setSelected(false);
                 siAcompañantes.setSelected(false);
+                bandera = 0;
+                panelOculto.setVisible(false);
+                
                 numNiños.setText("");
                 numAdultos.setText("");
     }//GEN-LAST:event_btnVaciarActionPerformed
+
+    private void comboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboMouseClicked
+
+    }//GEN-LAST:event_comboMouseClicked
+
+    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+
+    }//GEN-LAST:event_comboActionPerformed
 //
     /**
      * @param args the command line arguments
@@ -611,8 +684,8 @@ public static conexion conexion = new conexion();
     private javax.swing.JButton btnGrabar;
     private javax.swing.JButton btnMenuPrincipal;
     private javax.swing.JButton btnVaciar;
+    public static javax.swing.JComboBox combo;
     private javax.swing.JTextField id;
-    private javax.swing.JTextField id_lu;
     private javax.swing.JTextField ingresoApellidos;
     private javax.swing.JTextField ingresoCiudad;
     private javax.swing.JTextField ingresoCorreo;

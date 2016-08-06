@@ -9,6 +9,7 @@ package gestioncalidad6;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,12 +22,13 @@ public static conexion conexion = new conexion();
      * Creates new form modificacion
      */
     int bandera=0;
+    int banderaOculta = 0;
     public modificacion() {
         initComponents();
         this.setLocationRelativeTo(null);
         panelOculto.setVisible(false);
         contenedor.setVisible(false);
-        int bandera = 0;
+        
     }
 
     /**
@@ -443,22 +445,51 @@ public static conexion conexion = new conexion();
                 numNino= numNiños.getText();
             }
             if (bandera==0) {
+                String sql2 ="select cedula from infoturista where cedula = "+Integer.parseInt(ingresoCedula.getText());
+                
                   String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"'"
                      + ",cliente_frecuente = '"+frecuente+"',seguro_viaje ='"+seguro+"',acompanantes = '"+acompa+"',adultos='"+numAdulto+"',ninos = '"+numNino+"' where cedula = "+id.getText();
-             try{
-            conexion.ejecutarSQL(sql);
-            JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
-             ingresoNombres.setText("");
-                ingresoApellidos.setText("");
-                ingresoCedula.setText("");
-                ingresoCorreo.setText("");
-                ingresoCiudad.setText("");
-                ingresoDireccion.setText("");
-                siFrecuente.setSelected(false);
-                siSeguro.setSelected(false);
-                siAcompañantes.setSelected(false);
-                numAdultos.setText("");
-                numNiños.setText("");
+              
+                  try{
+                      String ced = "";
+                 boolean existe = false;
+                 
+                 try {
+                     ResultSet rs = conexion.ejecutarSQLSelect(sql2);
+                     
+                     while(rs.next()){
+                         existe = true;
+                         if (existe) {
+                             ced = rs.getString("cedula");
+                            // rs.close();
+                             if (ingresoCedula.getText().equals(ced)&&!(id.getText().equals(ingresoCedula.getText()))) {
+                                 JOptionPane.showMessageDialog(rootPane,"La cedula que ingresó ya existe");
+                             }else{existe =false;}
+                         }
+                     
+                     
+                             }if (!existe) {
+                                 conexion.ejecutarSQL(sql);
+                                JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
+                                ingresoNombres.setText("");
+                                ingresoApellidos.setText("");
+                                ingresoCedula.setText("");
+                                ingresoCorreo.setText("");
+                                ingresoCiudad.setText("");
+                                ingresoDireccion.setText("");
+                                siFrecuente.setSelected(false);
+                                siSeguro.setSelected(false);
+                                siAcompañantes.setSelected(false);
+                                banderaOculta=0;
+                                panelOculto.setVisible(false);
+                                numAdultos.setText("");
+                                numNiños.setText("");
+                             }else{JOptionPane.showMessageDialog(rootPane,"oops");}
+                 }catch(SQLException ex){
+                     JOptionPane.showMessageDialog(rootPane,"oops"+ex);
+                 }
+                 
+            
                 
             
             }
@@ -466,67 +497,10 @@ public static conexion conexion = new conexion();
                JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
                 }
             }else{JOptionPane.showMessageDialog(rootPane,"No se guardó el turista");}
-                 
-            
-            //
-            
-            /*
-            if (acompa.equals("true")) {
-            if (numNiños.getText().equals("")) {
-                    numNiños.setText("0");
-                }
-                if (numAdultos.getText().equals("")) {
-                    numAdultos.setText("0");
-                }
-                numAdulto=numAdultos.getText();
-                numNino= numNiños.getText();
-            }
-            else{
-                numAdultos.setText("0");
-                numNiños.setText("0");
-                 numNino = "0";
-                numAdulto ="0";
-            }
-            if ((numNiños.equals("0") && numAdultos.equals("0"))
-                    ||
-                    (numNiños.equals("00") && numAdultos.equals("00"))
-                    ||
-                    (numNiños.equals("0") && numAdultos.equals("00"))
-                    ||
-                    (numNiños.equals("00") && numAdultos.equals("0"))
-                    ) {
-                    JOptionPane.showMessageDialog(rootPane,"ingrese acompañante");
-                }else{
-                        String sql="UPDATE infoturista SET nombres = '"+ingresoNombres.getText()+"',apellidos = '"+ingresoApellidos.getText()+"', cedula = '"+ingresoCedula.getText()+"', correo = '"+ingresoCorreo.getText()+"', ciudad = '"+ingresoCiudad.getText()+"', direccion = '"+ingresoDireccion.getText()+"'"
-                     + ",cliente_frecuente = '"+frecuente+"',seguro_viaje ='"+seguro+"',acompanantes = '"+acompa+"',adultos='"+numAdulto+"',ninos = '"+numNino+"' where cedula = "+id.getText();
-             try{
-            conexion.ejecutarSQL(sql);
-            JOptionPane.showMessageDialog(rootPane,"se han guardado los cambios");
-             ingresoNombres.setText("");
-                ingresoApellidos.setText("");
-                ingresoCedula.setText("");
-                ingresoCorreo.setText("");
-                ingresoCiudad.setText("");
-                ingresoDireccion.setText("");
-                siFrecuente.setSelected(false);
-                siSeguro.setSelected(false);
-                siAcompañantes.setSelected(false);
-                numAdultos.setText("");
-                numNiños.setText("");
-                
-            
-            }
-                catch(Exception ex){
-               JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
-                }
-                        }
-             */
-             //
-             
-            }
-          
+
+            }  
         }
-      }else{JOptionPane.showMessageDialog(rootPane,"datos incorrectos");}
+      }else{JOptionPane.showMessageDialog(rootPane,"Por favor, ingrese todos los campos correctamente");}
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void numAdultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numAdultosActionPerformed
@@ -534,11 +508,11 @@ public static conexion conexion = new conexion();
     }//GEN-LAST:event_numAdultosActionPerformed
 
     private void siAcompañantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_siAcompañantesMouseClicked
-        if (bandera==0) {
+        if (banderaOculta==0) {
             panelOculto.setVisible(true);
-            bandera =1;
+            banderaOculta =1;
         } else {
-            bandera=0;
+            banderaOculta=0;
             panelOculto.setVisible(false);
         }
 
@@ -616,19 +590,16 @@ public static conexion conexion = new conexion();
                 if (acompanantes.equals("f")) {
                     siAcompañantes.setSelected(false);
                     panelOculto.setVisible(false);
-                    bandera=0;
+                    banderaOculta=0;
                 }else{
                     siAcompañantes.setSelected(true);
                     panelOculto.setVisible(true);
-                    bandera=1;
+                    banderaOculta=1;
                 }
-                
-                
-                
+   
             }
         }catch(Exception ex){
-                //txtApellidos.setText("");
-                //txtCedula.setText("");
+
             JOptionPane.showMessageDialog(rootPane,"exception: "+ex);
         }
              contenedor.setVisible(true);
